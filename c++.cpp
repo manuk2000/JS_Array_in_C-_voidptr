@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <map>
+#include <stdexcept>
 
 class JSArray
 {
@@ -28,6 +29,14 @@ private:
   {
     return map;
   }
+  int parsToInt(std::string s)
+  {
+    if (s[0] != '0')
+    {
+      return std::stoi(s);
+    }
+    return -1;
+  }
 
 public:
   JSArray()
@@ -50,6 +59,15 @@ public:
   void *get(int index)
   {
     return map[index];
+  }
+  void *get(std::string stringIndex)
+  {
+    int index = parsToInt(stringIndex);
+    if (index != -1)
+    {
+      return map[index];
+    }
+    throw std::runtime_error("Not fount index");
   }
 
   JSArray *concate(JSArray *arr)
@@ -103,6 +121,8 @@ int main(void)
 
   arr->getCapasity();
   arr->get(2);
+  arr->get("2");
+  arr->get("02");//throw std::runtime_error("Not fount index");
   JSArray *tmp = arr->concate(arr->slice(0, 1));
   JSArray *tmp1 = arr->concate(arr->splice(0, 1));
   tmp->shift();
@@ -111,5 +131,6 @@ int main(void)
   std::cout << *(std::string *)arr->pop() << std::endl;
   std::cout << *(double *)arr->pop() << std::endl;
   std::cout << *(int *)arr->pop() << std::endl;
+
   return 0;
 }
