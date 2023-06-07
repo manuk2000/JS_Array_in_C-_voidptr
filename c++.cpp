@@ -2,8 +2,6 @@
 #include <iostream>
 #include <map>
 
-using namespace std;
-
 class JSArray
 {
 private:
@@ -43,7 +41,7 @@ public:
 
   void *pop()
   {
-    return map[lastIndex--];
+    return map[--lastIndex];
   }
   int getCapasity()
   {
@@ -110,8 +108,8 @@ int main(void)
   tmp->shift();
   tmp->unshift();
 
-  arr->pop();
-  arr->pop();
-  arr->pop();
+  std::cout << *(std::string *)arr->pop() << std::endl;
+  std::cout << *(double *)arr->pop() << std::endl;
+  std::cout << *(int *)arr->pop() << std::endl;
   return 0;
 }
